@@ -61,10 +61,6 @@ Person.prototype.toString = function () {
   return `${this.name}, ${this.age}`;
 }
 
-
-
-
-
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -79,10 +75,39 @@ Person.prototype.toString = function () {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-  
+function Car(model, milesPerGallon) {
+  // initializations based on given arguments
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+
+  //Default initializations
+  this.tank = 0;
+  this.odometer = 0;
 }
 
+Car.prototype.fill = function (gallons) {
+  this.tank += gallons;
+}
+
+Car.prototype.drive = function (distance) {
+  this.odometer += distance;
+  this.tank -= (distance / this.milesPerGallon);
+
+  if (this.tank < 0) {
+    const overage = 0 - this.tank;
+    this.tank = 0;
+    this.odometer -= (this.milesPerGallon * overage);
+    return `I ran out of fuel at ${this.odometer} miles!`;
+  }
+  return `Odometer: ${this.odometer} miles  Tank: ${this.tank} gallons`
+}
+
+// const tesla = new Car('model 3', 10);
+// // console.log(tesla);
+// tesla.fill(4);
+// console.log(tesla.drive(41));
+
+// console.log(tesla);
 
 /*
   TASK 3
